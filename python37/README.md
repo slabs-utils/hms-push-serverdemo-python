@@ -3,35 +3,21 @@ English | [中文](https://github.com/HMS-Core/hms-push-serverdemo-python/blob/m
 
 ## Table of Contents
 
- * [Introduction](#introduction)
  * [Installation](#installation)
  * [Configuration ](#configuration )
- * [Supported Environments](#supported-environments)
  * [Sample Code](#sample-code)
  * [Libraries](#Libraries)
  * [License](#license)
  
  
-## Introduction
-
-Python sample code encapsulates APIs of the HUAWEI Push Kit server. It provides many sample programs about quick access to HUAWEI Push Kit for your reference or usage.
-
-The following table describes packages of Python sample code.
-
-| Package      |    Description |
-| ----------   |    ------------|
-| examples     |    Sample code packages. Each package can run independently.|
-| push_admin   |    Package where APIs of the HUAWEI Push Kit server are encapsulated.|
 	
 ## Installation
 
-To install pushkit-python-sample, you should extract the compressed ZIP file, execute the following command in the unzipped directory:
+To install pushkit-python-sample, you should use pip:
 ```
-python setup.py install
-```
+RUN pip install pip install -e "git+https://github.com/slabs-utils/hms-push-serverdemo-python.git@8aa574d582384dd837e3ae2955069e4225fce028#egg=huawei_push_admin&subdirectory=python37"
 
-## Supported Environments
-For pushkit-python-sample, We currently support Python 2.7/3.7 and JetBrains PyCharm are recommended.
+```
 
 
 ## Configuration 
