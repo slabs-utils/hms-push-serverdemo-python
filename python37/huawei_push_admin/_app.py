@@ -14,11 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import urllib
 import json
 import time
-from src.push_admin import _http
-from src.push_admin import _message_serializer
+import urllib
+import urllib.parse
+
+from huawei_push_admin import _http
+from huawei_push_admin import _message_serializer
 
 
 class App(object):
@@ -42,11 +44,11 @@ class App(object):
         except Exception as e:
             raise ApiCallError('caught exception when send. {0}'.format(e))
 
-    def __init__(self, appid_at, app_secret, appid_push, token_server='https://oauth-login.cloud.huawei.com/oauth2/v2/token',
+    def __init__(self, appid_at, app_secret_at, appid_push, token_server='https://oauth-login.cloud.huawei.com/oauth2/v2/token',
                  push_open_url='https://push-api.cloud.huawei.com'):
         """class init"""
-        self.appid_at = appid_at
-        self.app_secret_at = app_secret
+        self.app_id_at = appid_at
+        self.app_secret_at = app_secret_at
         if appid_push is None:
             self.appid_push = appid_at
         else:
@@ -72,9 +74,9 @@ class App(object):
         params = dict()
         params['grant_type'] = 'client_credentials'
         params['client_secret'] = self.app_secret_at
-        params['client_id'] = self.appid_at
+        params['client_id'] = self.app_id_at
 
-        msg_body = urllib.urlencode(params)
+        msg_body = urllib.parse.urlencode(params)
 
         try:
             response = _http.post(self.token_server, msg_body, headers, verify_peer=verify_peer)
@@ -86,7 +88,7 @@ class App(object):
             response_body = json.loads(response.text)
 
             self.access_token = response_body.get('access_token')
-            self.token_expired_time = long(round(time.time() * 1000)) + (long(response_body.get('expires_in')) - 5 * 60) * 1000
+            self.token_expired_time = int(round(time.time() * 1000)) + (int(response_body.get('expires_in')) - 5 * 60) * 1000
 
             return True, None
         except Exception as e:
@@ -97,9 +99,15 @@ class App(object):
         if self.access_token is None:
             """ need refresh token """
             return True
-        return long(round(time.time() * 1000)) >= self.token_expired_time
+        return int(round(time.time() * 1000)) >= self.token_expired_time
 
     def _update_token(self, verify_peer=False):
+        """
+        :param verify_peer: (optional) Either a boolean, in which case it controls whether we verify
+            the server's TLS certificate, or a string, in which case it must be a path
+            to a CA bundle to use. Defaults to ``True``.
+        :return:
+        """
         if self._is_token_expired() is True:
             result, reason = self._refresh_token(verify_peer)
             if result is False:
@@ -114,8 +122,8 @@ class App(object):
     def send(self, message, validate_only, **kwargs):
         """
             Sends the given message Huawei Cloud Messaging (HCM)
-            :param message:
-            :param validate_only:
+            :param message: JSON format message
+            :param validate_only: validate message format or not
             :param kwargs:
                    verify_peer: HTTPS server identity verification, use library 'certifi'
             :return:

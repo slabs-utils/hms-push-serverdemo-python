@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from src.push_admin import _messages, _app
-from src import push_admin
+from huawei_push_admin import _messages, _app
+import huawei_push_admin as push_admin
 
 """HUAWEI Cloud Messaging module."""
 
@@ -115,8 +115,8 @@ class SendResponse(object):
     """
     def __init__(self, response=None):
         try:
-            self._msg = response['msg']
             self._code = response['code']
+            self._msg = response['msg']
             self._requestId = response['requestId']
         except Exception as e:
             raise ValueError(format(repr(e)))

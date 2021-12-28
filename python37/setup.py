@@ -24,7 +24,7 @@ __author__ = 'Huawei'
 __license__ = 'Apache License 2.0'
 __url__ = 'https://developer.huawei.com/consumer/cn/'
 
-install_requires = ['requests>=2.20.1']
+install_requires = ['requests>=2.20.1', 'six >= 1.14.0']
 
 long_description = ('The Huawei Admin Python SDK enables server-side (backend) Python developers '
                     'to integrate Huawei into their services and applications.')
@@ -39,7 +39,7 @@ setup(
     license='Apache License 2.0',
     keywords='huawei cloud development',
     install_requires=install_requires,
-    packages=['src/push_admin'],
+    packages=['huawei_push_admin'],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
