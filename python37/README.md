@@ -15,7 +15,7 @@ English | [中文](https://github.com/HMS-Core/hms-push-serverdemo-python/blob/m
 
 To install pushkit-python-sample, you should use pip:
 ```
-RUN pip install pip install -e "git+https://github.com/slabs-utils/hms-push-serverdemo-python.git@8aa574d582384dd837e3ae2955069e4225fce028#egg=huawei_push_admin&subdirectory=python37"
+pip install pip install -e "git+https://github.com/slabs-utils/hms-push-serverdemo-python.git@8aa574d582384dd837e3ae2955069e4225fce028#egg=huawei_push_admin&subdirectory=python37"
 
 ```
 
